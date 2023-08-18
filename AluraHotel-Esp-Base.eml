@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="c3p0-0.9.5.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/JARS/c3p0-0.9.5.4.jar!/"/>
+	</lib>
+	<lib name="jcalendar-1.4.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/JARS/jcalendar-1.4.jar!/"/>
+	</lib>
+	<lib name="mchange-commons-java-0.2.16.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/JARS/mchange-commons-java-0.2.16.jar!/"/>
+	</lib>
+	<lib name="mysql-connector-j-8.0.32.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/JARS/mysql-connector-j-8.0.32.jar!/"/>
+	</lib>
+</component>
