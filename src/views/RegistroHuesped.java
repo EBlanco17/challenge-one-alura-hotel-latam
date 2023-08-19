@@ -218,6 +218,8 @@ public class RegistroHuesped extends JFrame {
 		txtNreserva.setColumns(10);
 		txtNreserva.setBackground(Color.WHITE);
 		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtNreserva.setEditable(false);
+		txtNreserva.setText(ReservasView.getIdReserva().toString());
 		contentPane.add(txtNreserva);
 		
 		JSeparator separator_1_2 = new JSeparator();
@@ -270,10 +272,18 @@ public class RegistroHuesped extends JFrame {
 				String nacionalidad = txtNacionalidad.getSelectedItem().toString();
 				String telefono = txtTelefono.getText();
 				Integer idReserva = Integer.parseInt(txtNreserva.getText());
-				System.out.println(fechaNacimiento);
 				Huesped huesped = new Huesped(nombre, apellido, fechaNacimiento, nacionalidad, telefono, idReserva);
 				HuespedController huespedController = new HuespedController();
-				huespedController.insertarHuesped(huesped);
+				int insert = huespedController.insertarHuesped(huesped);
+				if (insert > 0) {
+					Exito exito = new Exito();
+					exito.setVisible(true);
+					dispose();
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Error al registrar huesped");
+				}
+
 			}
 		});
 		btnguardar.setLayout(null);

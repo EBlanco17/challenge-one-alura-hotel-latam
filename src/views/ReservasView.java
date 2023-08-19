@@ -38,7 +38,8 @@ import javax.swing.border.LineBorder;
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame {
 
-	private JPanel contentPane;
+    public static Integer idReserva;
+    private JPanel contentPane;
 	public static JTextField txtValor;
 	public static JDateChooser txtFechaEntrada;
 	public static JDateChooser txtFechaSalida;
@@ -330,12 +331,11 @@ public class ReservasView extends JFrame {
 					Date fechaEntrada = formatearFecha(txtFechaEntrada);
 					Date fechaSalida = formatearFecha(txtFechaSalida);
 
-					Double valorReserva = Double.parseDouble(txtValor.getText());
+					Double valorReserva = calcularValor(txtFechaEntrada, txtFechaSalida);
 
 					Reserva reserva = new Reserva(fechaEntrada, fechaSalida, valorReserva, txtFormaPago.getSelectedItem().toString());
 					ReservaController controller = new ReservaController();
-					controller.insertarReserva(reserva);
-
+					idReserva = controller.insertarReserva(reserva);
 					RegistroHuesped registro = new RegistroHuesped();
 					registro.setVisible(true);
 				} else {
@@ -352,7 +352,11 @@ public class ReservasView extends JFrame {
 
 
 	}
-		
+
+	public static Integer getIdReserva() {
+		return idReserva;
+	}
+
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"	
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();
