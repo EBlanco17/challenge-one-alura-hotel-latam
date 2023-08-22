@@ -110,6 +110,23 @@ public class HuespedDAO {
             throw new RuntimeException(e);
         }
     }
+
+    public void actualizarReserva(Integer idReserva) {
+
+        try {
+            final PreparedStatement statement = con.prepareStatement(
+                    "UPDATE HUESPEDES SET id_reserva = null WHERE id_reserva = ?");
+            try (statement) {
+                System.out.println(statement);
+                statement.setInt(1, idReserva);
+
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 

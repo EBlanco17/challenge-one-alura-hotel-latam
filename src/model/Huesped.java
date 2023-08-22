@@ -1,5 +1,6 @@
 package model;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 public class Huesped {
     private Integer id;
@@ -9,10 +10,6 @@ public class Huesped {
     private String nacionalidad;
     private String telefono;
     private Integer idReserva;
-
-    public Huesped() {
-
-    }
 
     public Integer getId() {
         return id;

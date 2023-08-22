@@ -21,11 +21,19 @@ public class ReservaController {
         return reservaDAO.listar();
     }
     public int eliminar(Integer id) {
+        HuespedController huespedController = new HuespedController();
+        huespedController.actualizarReservaId(id);
         return reservaDAO.eliminar(id);
     }
 
     public int modificar(Reserva reserva) {
         return reservaDAO.modificar(reserva);
+    }
+    public List<Reserva> buscar(Integer id) {
+        return reservaDAO.buscar(id);
+    }
+    public List<Reserva> buscar(String apellido) {
+        return reservaDAO.buscar(apellido);
     }
 
 }

@@ -1,5 +1,6 @@
 package DAO;
 
+import model.Huesped;
 import model.Reserva;
 
 import java.sql.*;
@@ -98,8 +99,103 @@ public class ReservaDAO {
                 return statement.getUpdateCount();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return 0;
         }
     }
 
+    public List<Reserva> buscar(Integer id) {
+        System.out.println("Buscando reserva con id: "+id);
+        List<Reserva> resultado = new ArrayList<>();
+        try {
+            final PreparedStatement statement = con.prepareStatement("SELECT R.*, H.*" +
+                    " FROM Reservas R" +
+                    " JOIN Huespedes H ON R.id = H.id_reserva" +
+                    " WHERE R.id= ?;");
+
+            try (statement) {
+
+                statement.setInt(1, id);
+                System.out.println(statement);
+                statement.execute();
+                final ResultSet resultSet = statement.getResultSet();
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        Integer reservaId = resultSet.getInt("R.id");
+                        Date fechaEntrada = resultSet.getDate("R.fecha_entrada");
+                        Date fechaSalida = resultSet.getDate("R.fecha_salida");
+                        Double valor = resultSet.getDouble("R.valor");
+                        String formaPago = resultSet.getString("R.forma_pago");
+
+                        var reserva = resultado
+                                .stream()
+                                .filter(res -> res.getId().equals(reservaId))
+                                .findAny()
+                                .orElseGet(()->{
+                                    Reserva res = new Reserva(reservaId, fechaEntrada, fechaSalida, valor, formaPago);
+                                    resultado.add(res);
+                                    return res;
+                                });
+
+                        Huesped huesped = new Huesped(
+                                resultSet.getInt("H.id"),
+                                resultSet.getString("H.nombre"),
+                                resultSet.getString("H.apellido"),
+                                resultSet.getDate("H.fecha_nacimiento"),
+                                resultSet.getString("H.nacionalidad"),
+                                resultSet.getString("H.telefono"),
+                                resultSet.getInt("H.id_reserva"));
+                        reserva.agregar(huesped);
+                    }
+                }
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return resultado;
+    }
+
+    public List<Reserva> buscar(String apellido) {
+
+        List<Reserva> resultado = new ArrayList<>();
+        try {
+            final PreparedStatement statement = con.prepareStatement("SELECT R.*, H.*" +
+                    " FROM Reservas R" +
+                    " JOIN Huespedes H ON R.id = H.id_reserva" +
+                    " WHERE H.apellido LIKE ?;");
+
+            try (statement) {
+
+                statement.setString(1, "%"+apellido+"%");
+
+                statement.execute();
+                final ResultSet resultSet = statement.getResultSet();
+                try (resultSet) {
+                    while (resultSet.next()) {
+                        Integer reservaId = resultSet.getInt("R.id");
+                        Date fechaEntrada = resultSet.getDate("R.fecha_entrada");
+                        Date fechaSalida = resultSet.getDate("R.fecha_salida");
+                        Double valor = resultSet.getDouble("R.valor");
+                        String formaPago = resultSet.getString("R.forma_pago");
+
+
+                        Reserva res = new Reserva(reservaId, fechaEntrada, fechaSalida, valor, formaPago);
+                        resultado.add(res);
+
+                        Huesped huesped = new Huesped(
+                                resultSet.getInt("H.id"),
+                                resultSet.getString("H.nombre"),
+                                resultSet.getString("H.apellido"),
+                                resultSet.getDate("H.fecha_nacimiento"),
+                                resultSet.getString("H.nacionalidad"),
+                                resultSet.getString("H.telefono"),
+                                resultSet.getInt("H.id_reserva"));
+                        res.agregar(huesped);
+                    }
+                }
+            }
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return resultado;
+    }
 }

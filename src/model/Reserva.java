@@ -11,10 +11,6 @@ public class Reserva {
     private Date fechaSalida;
     private Double valor;
     private String formaPago;
-    private List<Huesped> huespedes;
-    public Reserva() {
-
-    }
 
     public Reserva(int id, Date fechaEntrada, Date fechaSalida, double valor, String formaPago) {
         this.id = id;
@@ -49,9 +45,9 @@ public class Reserva {
         return formaPago;
     }
 
+    private List<Huesped> huespedes;
 
-
-    public void agregarHuesped(Huesped huesped) {
+    public void agregar(Huesped huesped) {
         if (this.huespedes == null) {
             this.huespedes = new ArrayList<>();
         }

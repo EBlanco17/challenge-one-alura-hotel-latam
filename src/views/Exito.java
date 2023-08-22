@@ -26,7 +26,7 @@ public class Exito extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Exito dialog = new Exito();
+			Exito dialog = new Exito("Hello");
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -37,7 +37,7 @@ public class Exito extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Exito() {
+	public Exito(String mensaje) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Exito.class.getResource("/imagenes/aH-40px.png")));
 		setBounds(100, 100, 394, 226);
 		getContentPane().setLayout(new BorderLayout());
@@ -53,7 +53,7 @@ public class Exito extends JDialog {
 			contentPanel.add(lblNewLabel);
 		}
 		{
-			JLabel lblNewLabel_1 = new JLabel("Datos guardados satisfactoriamente");
+			JLabel lblNewLabel_1 = new JLabel(mensaje);
 			lblNewLabel_1.setForeground(new Color (12, 138, 199));
 			lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 18));
 			lblNewLabel_1.setBounds(27, 122, 322, 21);
@@ -68,7 +68,7 @@ public class Exito extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						dispose();//sirve para cerrar la ventana actual
-						MenuUsuario usuario = new MenuUsuario(); 
+						MenuUsuario usuario = new MenuUsuario();
 						usuario.setVisible(true);
 					}
 				});
@@ -78,6 +78,11 @@ public class Exito extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();//sirve para cerrar la ventana actual
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}

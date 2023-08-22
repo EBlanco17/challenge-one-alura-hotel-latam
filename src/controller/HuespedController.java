@@ -14,9 +14,8 @@ public class HuespedController {
         this.huespedDAO = new HuespedDAO(new ConexionFactory().getConexion());
     }
     public int insertarHuesped(Huesped huesped) {
-       return huespedDAO.insertarHuesped(huesped);
+        return huespedDAO.insertarHuesped(huesped);
     }
-
 
     public List<Huesped> listar() {
         return huespedDAO.listar();
@@ -29,4 +28,9 @@ public class HuespedController {
     public int eliminar(Integer id) {
         return huespedDAO.eliminar(id);
     }
+
+    public void actualizarReservaId(Integer idReserva) {
+        huespedDAO.actualizarReserva(idReserva);
+    }
+
 }
