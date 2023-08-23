@@ -1,5 +1,7 @@
 package views;
 
+import model.InfoSession;
+
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,6 +41,14 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal() {
+		super("Hotel Alura");
+
+		if (InfoSession.getUsuarioLogueado() != null) {
+			MenuUsuario menu = new MenuUsuario();
+			menu.setVisible(true);
+			dispose();
+		}
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Principal.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setBounds(100, 100, 910, 537);

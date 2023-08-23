@@ -38,7 +38,9 @@ public class Error extends JDialog {
      * Create the dialog.
      */
     public Error(String mensaje) {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(Error.class.getResource("/imagenes/aH-40px.png")));
+        super.setTitle("Error");
+        setResizable(false);
+        setIconImage(Toolkit.getDefaultToolkit().getImage(Error.class.getResource("/imagenes/cerrar-24px.png")));
         setBounds(100, 100, 394, 226);
         getContentPane().setLayout(new BorderLayout());
         contentPanel.setBackground(SystemColor.control);

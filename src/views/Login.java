@@ -1,20 +1,18 @@
 package views;
 
 import controller.UsuarioController;
+import model.InfoSession;
 import model.Usuario;
 
-import java.awt.EventQueue;
+import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
-import java.awt.SystemColor;
-import java.awt.Font;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 import java.awt.event.MouseAdapter;
@@ -53,6 +51,15 @@ public class Login extends JFrame {
 	 * Create the frame.
 	 */
 	public Login() {
+		super("Login");
+
+		if (InfoSession.getUsuarioLogueado() != null) {
+			MenuUsuario menu = new MenuUsuario();
+			menu.setVisible(true);
+			dispose();
+		}
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/imagenes/login.png")));
 		setResizable(false);
 		setUndecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -238,12 +245,11 @@ public class Login extends JFrame {
 	}
 
 	private void Login() {
-
 		UsuarioController usuarioController = new UsuarioController();
 		Usuario usuario = usuarioController.login(txtUsuario.getText(), String.valueOf(txtContrasena.getPassword()));
 
 		if(usuario != null){
-			MenuUsuario.setUsuario(usuario);
+			InfoSession.setUsuarioLogueado(usuario);
 			MenuUsuario menu = new MenuUsuario();
 			menu.setVisible(true);
 			dispose();

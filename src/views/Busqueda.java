@@ -3,6 +3,7 @@ package views;
 import controller.HuespedController;
 import controller.ReservaController;
 import model.Huesped;
+import model.InfoSession;
 import model.Reserva;
 
 import java.awt.EventQueue;
@@ -53,6 +54,11 @@ public class Busqueda extends JFrame {
 	 * Create the frame.
 	 */
 	public Busqueda() {
+		if (InfoSession.getUsuarioLogueado() == null) {
+			Login login = new Login();
+			login.setVisible(true);
+			dispose();
+		}
 
 		huespedController = new HuespedController();
 		reservaController = new ReservaController();
@@ -182,16 +188,17 @@ public class Busqueda extends JFrame {
 			}
 			@Override
 			public void mouseExited(MouseEvent e) {
-				btnAtras.setBackground(Color.white);
+				btnAtras.setBackground(new Color(171, 169, 169));
 				labelAtras.setForeground(Color.black);
 			}
 		});
 		btnAtras.setLayout(null);
-		btnAtras.setBackground(Color.WHITE);
+		btnAtras.setBackground(new Color(171, 169, 169));
 		btnAtras.setBounds(0, 0, 53, 36);
 		header.add(btnAtras);
 
-		labelAtras = new JLabel("<");
+		labelAtras = new JLabel("");
+		labelAtras.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/home.png")));
 		labelAtras.setHorizontalAlignment(SwingConstants.CENTER);
 		labelAtras.setFont(new Font("Roboto", Font.PLAIN, 23));
 		labelAtras.setBounds(0, 0, 53, 36);
@@ -239,7 +246,30 @@ public class Busqueda extends JFrame {
 		contentPane.add(separator_1_2);
 
 		JPanel btnbuscar = new JPanel();
+		btnbuscar.setLayout(null);
+		btnbuscar.setBackground(new Color(201, 201, 201));
+		btnbuscar.setBounds(748, 125, 122, 35);
+		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+		JLabel lblBuscar = new JLabel("");
+		lblBuscar.setBounds(0, 0, 122, 35);
+		btnbuscar.add(lblBuscar);
+		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBuscar.setForeground(Color.WHITE);
+		lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblBuscar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/lupa-1.png")));
 		btnbuscar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnbuscar.setBackground(new Color(22, 97, 150));
+				lblBuscar.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnbuscar.setBackground(new Color(201, 201, 201));
+				lblBuscar.setForeground(Color.white);
+			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				reservaController = new ReservaController();
@@ -247,14 +277,14 @@ public class Busqueda extends JFrame {
 				try {
 					int id = Integer.parseInt(txtBuscar.getText());
 					lista = reservaController.buscar(id);
-				}catch (NumberFormatException ex){
+				} catch (NumberFormatException ex) {
 					lista = reservaController.buscar(txtBuscar.getText());
 				}
 
 				limpiarTabla(modelo);
 				limpiarTabla(modeloHuesped);
 				lista.forEach(reserva -> {
-					modelo.addRow(new Object[] {
+					modelo.addRow(new Object[]{
 							reserva.getId(),
 							reserva.getFechaEntrada(),
 							reserva.getFechaSalida(),
@@ -263,7 +293,7 @@ public class Busqueda extends JFrame {
 					});
 					var huespedes = reserva.getHuespedes();
 					huespedes.forEach(huesped -> {
-						modeloHuesped.addRow(new Object[] {
+						modeloHuesped.addRow(new Object[]{
 								huesped.getId(),
 								huesped.getNombre(),
 								huesped.getApellido(),
@@ -274,24 +304,36 @@ public class Busqueda extends JFrame {
 						});
 					});
 				});
-
 			}
 		});
-		btnbuscar.setLayout(null);
-		btnbuscar.setBackground(new Color(12, 138, 199));
-		btnbuscar.setBounds(748, 125, 122, 35);
-		btnbuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 		contentPane.add(btnbuscar);
 
-		JLabel lblBuscar = new JLabel("BUSCAR");
-		lblBuscar.setBounds(0, 0, 122, 35);
-		btnbuscar.add(lblBuscar);
-		lblBuscar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBuscar.setForeground(Color.WHITE);
-		lblBuscar.setFont(new Font("Roboto", Font.PLAIN, 18));
-
 		JPanel btnEditar = new JPanel();
+		btnEditar.setLayout(null);
+		btnEditar.setBackground(new Color(201, 201, 201));
+		btnEditar.setBounds(635, 508, 122, 35);
+		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+		JLabel lblEditar = new JLabel("");
+		lblEditar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEditar.setForeground(Color.WHITE);
+		lblEditar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblEditar.setBounds(0, 0, 122, 35);
+		lblEditar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/editar-texto.png")));
+		btnEditar.add(lblEditar);
 		btnEditar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEditar.setBackground(new Color(87, 194, 60));
+				lblEditar.setForeground(Color.white);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEditar.setBackground(new Color(201, 201, 201));
+				lblEditar.setForeground(Color.white);
+			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(tbReservas.isShowing()) {
@@ -305,21 +347,34 @@ public class Busqueda extends JFrame {
 				}
 			}
 		});
-		btnEditar.setLayout(null);
-		btnEditar.setBackground(new Color(12, 138, 199));
-		btnEditar.setBounds(635, 508, 122, 35);
-		btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
 		contentPane.add(btnEditar);
 
-		JLabel lblEditar = new JLabel("EDITAR");
-		lblEditar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEditar.setForeground(Color.WHITE);
-		lblEditar.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblEditar.setBounds(0, 0, 122, 35);
-		btnEditar.add(lblEditar);
 
 		JPanel btnEliminar = new JPanel();
+		btnEliminar.setLayout(null);
+		btnEliminar.setBackground(new Color(201, 201, 201));
+		btnEliminar.setBounds(767, 508, 122, 35);
+		btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+		JLabel lblEliminar = new JLabel("");
+		lblEliminar.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEliminar.setForeground(Color.WHITE);
+		lblEliminar.setFont(new Font("Roboto", Font.PLAIN, 18));
+		lblEliminar.setBounds(0, 0, 122, 35);
+		lblEliminar.setIcon(new ImageIcon(Busqueda.class.getResource("/imagenes/deletar.png")));
+		btnEliminar.add(lblEliminar);
 		btnEliminar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnEliminar.setBackground(new Color(201, 52, 52, 255));
+				lblEliminar.setForeground(Color.white);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnEliminar.setBackground(new Color(201, 201, 201));
+				lblEliminar.setForeground(Color.white);
+			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(tbReservas.isShowing()) {
@@ -333,19 +388,10 @@ public class Busqueda extends JFrame {
 				}
 			}
 		});
-		btnEliminar.setLayout(null);
-		btnEliminar.setBackground(new Color(12, 138, 199));
-		btnEliminar.setBounds(767, 508, 122, 35);
-		btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-		contentPane.add(btnEliminar);
 
-		JLabel lblEliminar = new JLabel("ELIMINAR");
-		lblEliminar.setHorizontalAlignment(SwingConstants.CENTER);
-		lblEliminar.setForeground(Color.WHITE);
-		lblEliminar.setFont(new Font("Roboto", Font.PLAIN, 18));
-		lblEliminar.setBounds(0, 0, 122, 35);
-		btnEliminar.add(lblEliminar);
+		contentPane.add(btnEliminar);
 		setResizable(false);
+
 	}
 
 	//Código que permite mover la ventana por la pantalla según la posición de "x" y "y"

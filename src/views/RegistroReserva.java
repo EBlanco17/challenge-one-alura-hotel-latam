@@ -8,6 +8,7 @@ import java.awt.Color;
 
 import com.toedter.calendar.JDateChooser;
 import controller.ReservaController;
+import model.InfoSession;
 import model.Reserva;
 
 import java.awt.Font;
@@ -57,8 +58,15 @@ public class RegistroReserva extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroReserva() {
-		super("Reserva");
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/imagenes/aH-40px.png")));
+		super("Reservar");
+
+		if (InfoSession.getUsuarioLogueado() == null) {
+			Login login = new Login();
+			login.setVisible(true);
+			dispose();
+		}
+
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroReserva.class.getResource("/imagenes/calendario.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 560);
 		setResizable(false);
@@ -261,7 +269,9 @@ public class RegistroReserva extends JFrame {
 		txtFechaEntrada.setBorder(new LineBorder(SystemColor.window));
 		txtFechaEntrada.setDateFormatString("yyyy-MM-dd");
 		txtFechaEntrada.setFont(new Font("Roboto", Font.PLAIN, 18));
-		txtFechaEntrada.setDate(Calendar.getInstance().getTime());
+		Calendar date = Calendar.getInstance();
+		date.add(Calendar.DAY_OF_MONTH, 1); // Agregar 1 días a la fecha actual
+		txtFechaEntrada.setCalendar(date);
 		panel.add(txtFechaEntrada);
 
 		txtFechaSalida = new JDateChooser();
@@ -320,11 +330,12 @@ public class RegistroReserva extends JFrame {
 		btnsiguiente.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (RegistroReserva.txtFechaEntrada.getDate() != null && RegistroReserva.txtFechaSalida.getDate() != null) {
+				Double valorReserva = calcularValor(txtFechaEntrada, txtFechaSalida);
+				if (txtFechaEntrada.getDate() != null && txtFechaSalida.getDate() != null && valorReserva > 0.0) {
 					Date fechaEntrada = formatearFecha(txtFechaEntrada);
 					Date fechaSalida = formatearFecha(txtFechaSalida);
 
-					Double valorReserva = calcularValor(txtFechaEntrada, txtFechaSalida);
+					valorReserva = calcularValor(txtFechaEntrada, txtFechaSalida);
 
 					Reserva reserva = new Reserva(fechaEntrada, fechaSalida, valorReserva, txtFormaPago.getSelectedItem().toString());
 					ReservaController controller = new ReservaController();
@@ -340,7 +351,7 @@ public class RegistroReserva extends JFrame {
 					}
 
 				} else {
-					Error error = new Error("Llene todos los campos.");
+					Error error = new Error("Verfique los campos.");
 					error.setVisible(true);
 
 				}
@@ -371,20 +382,38 @@ public class RegistroReserva extends JFrame {
 		this.setLocation(x - xMouse, y - yMouse);
 	}
 
-	private static Date formatearFecha(JDateChooser fecha){
+	private Date formatearFecha(JDateChooser fecha){
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 		LocalDate localDate = LocalDate.parse(sdf.format(fecha.getDate()), formatter);
 		return Date.valueOf(localDate);
 	}
-	private static Double calcularValor(JDateChooser txtFechaEntrada, JDateChooser txtFechaSalida){
+	private Double calcularValor(JDateChooser txtFechaEntrada, JDateChooser txtFechaSalida){
 		Date fechaEntrada = formatearFecha(txtFechaEntrada);
 		Date fechaSalida = formatearFecha(txtFechaSalida);
 
-		//Cálculo del valor de la reserva
-		int dias = (int) ChronoUnit.DAYS.between(fechaEntrada.toLocalDate(), fechaSalida.toLocalDate())+1;
-		Double valor = (double) (dias * 80000);
-		return valor;
+		Date fechaActual = new Date(System.currentTimeMillis());
+		int dias = 0;
+
+		//verificar fechas con la actual
+		if (fechaEntrada.before(fechaActual) || fechaSalida.before(fechaActual)) {
+			Error error = new Error("Verifique las fechas");
+			error.setVisible(true);
+
+		}else {
+
+			//Cálculo del valor de la reserva
+			dias = (int) ChronoUnit.DAYS.between(fechaEntrada.toLocalDate(), fechaSalida.toLocalDate());
+			if (dias == 0){
+				dias = 1;
+			} else if (dias < 0) {
+				dias = 0;
+				Error error = new Error("verifque fecha salida");
+				error.setVisible(true);
+			}
+		}
+			Double valor = (double) (dias * 80000);
+			return valor;
 	}
 
 }

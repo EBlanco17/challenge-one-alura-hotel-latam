@@ -1,5 +1,6 @@
 package views;
 
+import model.InfoSession;
 import model.Usuario;
 
 import java.awt.EventQueue;
@@ -38,14 +39,17 @@ public class MenuUsuario extends JFrame {
 			}
 		});
 	}
-private static Usuario usuario;
-	public static void setUsuario(Usuario usuario) {
-		MenuUsuario.usuario = usuario;
-	}
 	/**
 	 * Create the frame.
 	 */
 	public MenuUsuario() {
+		super("Inicio");
+
+		if (InfoSession.getUsuarioLogueado() == null) {
+			Login login = new Login();
+			login.setVisible(true);
+			dispose();
+		}
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuUsuario.class.getResource("/imagenes/aH-40px.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 944, 609);
@@ -143,6 +147,37 @@ private static Usuario usuario;
 		lblBusquedaDeReservas.setFont(new Font("Roboto", Font.PLAIN, 18));
 		btnBusqueda.add(lblBusquedaDeReservas);
 
+		JPanel btnPerfil = new JPanel();
+		btnPerfil.setBounds(0, 369, 257, 56);
+		btnPerfil.setBackground(new Color(12, 138, 199));
+		btnPerfil.setLayout(null);
+
+		btnPerfil.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				btnPerfil.setBackground(new Color(118, 187, 223));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnPerfil.setBackground(new Color(12, 138, 199));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Perfil perfil = new Perfil();
+				perfil.setVisible(true);
+				dispose();
+			}
+		});
+
+		panelMenu.add(btnPerfil);
+		JLabel lblPerfil = new JLabel("Perfil");
+		lblPerfil.setIcon(new ImageIcon(Perfil.class.getResource("/imagenes/perfil.png")));
+		lblPerfil.setBounds(27, 11, 200, 34);
+		lblPerfil.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPerfil.setForeground(Color.WHITE);
+		lblPerfil.setFont(new Font("Roboto", Font.PLAIN, 18));
+		btnPerfil.add(lblPerfil);
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(26, 219, 201, 2);
 		panelMenu.add(separator);
@@ -208,7 +243,7 @@ private static Usuario usuario;
 		String fecha = new SimpleDateFormat("dd/MM/yyyy").format(fechaActual); //formatear la fecha en una cadena
 		labelFecha.setText("Hoy es " + fecha); //setear la representacion en cadena de la fecha
 
-		JLabel lblNewLabel = new JLabel("Bienvenido, "+usuario.getNombre()+" "+usuario.getApellido());
+		JLabel lblNewLabel = new JLabel("Bienvenido, "+InfoSession.getUsuarioLogueado().getNombre()+" "+InfoSession.getUsuarioLogueado().getApellido());
 		lblNewLabel.setFont(new Font("Roboto", Font.BOLD, 24));
 		lblNewLabel.setBounds(302, 234, 500, 46);
 		contentPane.add(lblNewLabel);

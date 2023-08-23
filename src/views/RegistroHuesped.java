@@ -7,6 +7,7 @@ import java.awt.Color;
 import com.toedter.calendar.JDateChooser;
 import controller.HuespedController;
 import model.Huesped;
+import model.InfoSession;
 
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -55,8 +56,14 @@ public class RegistroHuesped extends JFrame {
 	 * Create the frame.
 	 */
 	public RegistroHuesped() {
+		super("Registro Huesped");
 
-		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
+		if (InfoSession.getUsuarioLogueado() == null) {
+			Login login = new Login();
+			login.setVisible(true);
+			dispose();
+		}
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/disquete.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 910, 634);
 		contentPane = new JPanel();
@@ -142,7 +149,7 @@ public class RegistroHuesped extends JFrame {
 		txtFechaN.getCalendarButton().setBackground(SystemColor.textHighlight);
 		txtFechaN.setDateFormatString("yyyy-MM-dd");
 		Calendar newDate = Calendar.getInstance();
-		newDate.set(2000,1,1);
+		newDate.set(2000,0,1);
 		txtFechaN.setCalendar(newDate);
 		contentPane.add(txtFechaN);
 

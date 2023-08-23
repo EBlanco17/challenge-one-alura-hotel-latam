@@ -10,7 +10,7 @@ public class Usuario {
     private String apellido;
     private String email;
     private String telefono;
-    private Date fechaNacimiento;
+
 
     public void setId(int id) {
         this.id = id;
@@ -46,4 +46,17 @@ public class Usuario {
     public String getApellido() {
         return apellido;
     }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
 }
