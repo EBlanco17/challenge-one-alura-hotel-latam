@@ -49,8 +49,16 @@
 </br></br>
 
 ## 🚧 Proyecto
+# 🖱️Ejecute el archivo AluraHotel-App.jar ubicado en la carpeta.
+<p style="color: red; font-size: larger; text-align: center">
+Credenciales de acceso al aplicativo: 
+</p>
+<p style="color: darkgoldenrod; font-size: larger; text-align: center">
+<strong>usuario: </strong> admin <br>
+<strong> contraseña: </strong> admin12345
+</p>
 
-#### Al clonar o descargar el proyecto tendra las siguientes vistas:
+### Al clonar o descargar el proyecto tendra las siguientes vistas:
 1. Vista Inicial
 <p align="center" > 
 Esta vista es la primera que se muestra al ejecutar el aplicativo. </br> Seleccionar el botón <strong>LOGIN</strong> para ingresar al aplicativo.
@@ -165,13 +173,7 @@ CREATE TABLE `huespedes`(
 <p style="color: chartreuse; font-size: larger; text-align: center">
 Realizados todos estos pasos, ya puede ejecutar el aplicativo.
 </p>
-<p style="color: red; font-size: larger; text-align: center">
-Credenciales de acceso al aplicativo: 
-</p>
-<p style="color: darkgoldenrod; font-size: larger; text-align: center">
-<strong>usuario: </strong> admin <br>
-<strong> contraseña: </strong> admin12345
-</p>
+
 
 👨🏻‍💻 <strong>Emerson Blanco</strong></br>
 <a href="https://www.linkedin.com/in/emerson-blanco-alfonso/" target="_blank">
