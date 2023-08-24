@@ -211,6 +211,7 @@ public class Busqueda extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión en la aplicación?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
 
 				if (confirm == JOptionPane.YES_OPTION) {
+					InfoSession.setUsuarioLogueado(null);
 					Principal login = new Principal();
 					login.setVisible(true);
 					dispose();
@@ -478,7 +479,7 @@ public class Busqueda extends JFrame {
 					if (itemEliminados > 0){
 						Exito exito = new Exito(itemEliminados + " Item eliminado con éxito!");
 						exito.setVisible(true);
-						dispose();
+
 					}else {
 						Error error = new Error("Error en el proceso");
 						error.setVisible(true);
@@ -555,7 +556,7 @@ public class Busqueda extends JFrame {
 					if (itemEliminados > 0){
 						Exito exito = new Exito(itemEliminados + " Item eliminado con éxito!");
 						exito.setVisible(true);
-						dispose();
+
 					}else {
 						Error error = new Error("Error en el proceso");
 						error.setVisible(true);

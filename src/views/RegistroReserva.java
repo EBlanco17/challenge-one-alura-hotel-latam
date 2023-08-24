@@ -169,6 +169,7 @@ public class RegistroReserva extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión en la aplicación?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
 
 				if (confirm == JOptionPane.YES_OPTION) {
+					InfoSession.setUsuarioLogueado(null);
 					Principal login = new Principal();
 					login.setVisible(true);
 					dispose();
@@ -412,8 +413,8 @@ public class RegistroReserva extends JFrame {
 				error.setVisible(true);
 			}
 		}
-			Double valor = (double) (dias * 80000);
-			return valor;
+		Double valor = (double) (dias * 80000);
+		return valor;
 	}
 
 }

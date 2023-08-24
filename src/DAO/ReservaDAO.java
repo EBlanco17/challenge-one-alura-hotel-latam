@@ -17,7 +17,7 @@ public class ReservaDAO {
     public int insertarReserva(Reserva reserva) {
         try (con){
             PreparedStatement statement = con.prepareStatement(
-                    "INSERT INTO RESERVAS (Fecha_entrada, Fecha_salida, Valor, Forma_pago) " +
+                    "INSERT INTO reservas (fecha_entrada, fecha_salida, valor, forma_pago) " +
                             "VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             try(statement){
                 return ejecutarRegistro(reserva, statement);
@@ -50,7 +50,7 @@ public class ReservaDAO {
         List<Reserva> resultado = new ArrayList<>();
         try{
             final PreparedStatement statement = con.prepareStatement(
-                    "SELECT ID, FECHA_ENTRADA, FECHA_SALIDA, VALOR, FORMA_PAGO FROM RESERVAS");
+                    "SELECT * FROM reservas");
             try(statement){
                 statement.execute();
                 final ResultSet resultSet = statement.getResultSet();
@@ -76,7 +76,7 @@ public class ReservaDAO {
     public int modificar(Reserva reserva) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "UPDATE RESERVAS SET Fecha_entrada = ?, Fecha_salida = ?, Valor = ?, Forma_pago = ? WHERE ID = ?");
+                    "UPDATE reservas SET fecha_entrada = ?, fecha_salida = ?, valor = ?, forma_pago = ? WHERE id = ?");
             try (statement) {
                 statement.setDate(1, reserva.getFechaEntrada());
                 statement.setDate(2, reserva.getFechaSalida());
@@ -92,7 +92,7 @@ public class ReservaDAO {
     public int eliminar(Integer id) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "DELETE FROM RESERVAS WHERE ID = ?");
+                    "DELETE FROM reservas WHERE id = ?");
             try (statement) {
                 statement.setInt(1, id);
                 statement.execute();
@@ -108,14 +108,13 @@ public class ReservaDAO {
         List<Reserva> resultado = new ArrayList<>();
         try {
             final PreparedStatement statement = con.prepareStatement("SELECT R.*, H.*" +
-                    " FROM Reservas R" +
-                    " JOIN Huespedes H ON R.id = H.id_reserva" +
+                    " FROM reservas R" +
+                    " JOIN huespedes H ON R.id = H.id_reserva" +
                     " WHERE R.id= ?;");
 
             try (statement) {
 
                 statement.setInt(1, id);
-                System.out.println(statement);
                 statement.execute();
                 final ResultSet resultSet = statement.getResultSet();
                 try (resultSet) {
@@ -159,8 +158,8 @@ public class ReservaDAO {
         List<Reserva> resultado = new ArrayList<>();
         try {
             final PreparedStatement statement = con.prepareStatement("SELECT R.*, H.*" +
-                    " FROM Reservas R" +
-                    " JOIN Huespedes H ON R.id = H.id_reserva" +
+                    " FROM reservas R" +
+                    " JOIN huespedes H ON R.id = H.id_reserva" +
                     " WHERE H.apellido LIKE ?;");
 
             try (statement) {

@@ -16,7 +16,7 @@ public class HuespedDAO {
     public int insertarHuesped(Huesped huesped) {
         try (con) {
             final PreparedStatement statement = con.prepareStatement(
-                    "INSERT INTO HUESPEDES (Nombre, Apellido, Fecha_nacimiento, Nacionalidad, Telefono, id_reserva) " +
+                    "INSERT INTO huespedes (nombre, apellido, fecha_nacimiento, nacionalidad, telefono, id_reserva) " +
                             "VALUES (?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
             try (statement) {
                 return ejecutarRegistro(huesped, statement);
@@ -54,7 +54,7 @@ public class HuespedDAO {
         try {
 
             final PreparedStatement statement = con.prepareStatement(
-                    "SELECT ID, NOMBRE, APELLIDO, FECHA_NACIMIENTO, NACIONALIDAD, TELEFONO, ID_RESERVA FROM HUESPEDES");
+                    "SELECT * FROM huespedes");
 
             try (statement) {
                 statement.execute();
@@ -82,7 +82,7 @@ public class HuespedDAO {
     public int modificar(Huesped huesped) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "UPDATE HUESPEDES SET Nombre = ?, Apellido = ?, Fecha_nacimiento = ?, Nacionalidad = ?, Telefono = ?, id_reserva = ? WHERE ID = ?");
+                    "UPDATE huespedes SET nombre = ?, apellido = ?, fecha_nacimiento = ?, nacionalidad = ?, telefono = ?, id_reserva = ? WHERE id = ?");
             try (statement) {
                 statement.setString(1, huesped.getNombre());
                 statement.setString(2, huesped.getApellido());
@@ -101,7 +101,7 @@ public class HuespedDAO {
     public int eliminar(Integer id) {
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "DELETE FROM HUESPEDES WHERE ID = ?");
+                    "DELETE FROM huespedes WHERE id = ?");
             try (statement) {
                 statement.setInt(1, id);
                 return statement.executeUpdate();
@@ -115,7 +115,7 @@ public class HuespedDAO {
 
         try {
             final PreparedStatement statement = con.prepareStatement(
-                    "UPDATE HUESPEDES SET id_reserva = null WHERE id_reserva = ?");
+                    "UPDATE huespedes SET id_reserva = null WHERE id_reserva = ?");
             try (statement) {
                 System.out.println(statement);
                 statement.setInt(1, idReserva);

@@ -18,11 +18,12 @@ public class UsuarioDAO {
         Usuario resultado = null;
         try(con){
             final PreparedStatement statement = con.prepareStatement(
-                    "SELECT * FROM USUARIOS WHERE USUARIO = ? AND CONTRASENA = ?");
+                    "SELECT * FROM usuarios WHERE usuario = ? AND contrasena = ?");
 
             try(statement){
                 statement.setString(1, usuario);
                 statement.setString(2, contrasena);
+                System.out.println(statement);
                 statement.execute();
                 final ResultSet resultSet = statement.getResultSet();
                 try (resultSet) {

@@ -194,6 +194,7 @@ public class MenuUsuario extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión en la aplicación?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
 
 				if (confirm == JOptionPane.YES_OPTION) {
+					InfoSession.setUsuarioLogueado(null);
 					Principal login = new Principal();
 					login.setVisible(true);
 					dispose();

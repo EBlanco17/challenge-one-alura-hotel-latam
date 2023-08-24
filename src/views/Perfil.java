@@ -197,6 +197,7 @@ public class Perfil extends JFrame {
                 int confirm = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión en la aplicación?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
 
                 if (confirm == JOptionPane.YES_OPTION) {
+                    InfoSession.setUsuarioLogueado(null);
                     Principal login = new Principal();
                     login.setVisible(true);
                     dispose();
@@ -238,7 +239,7 @@ public class Perfil extends JFrame {
         lblNewLabel_1.setFont(new Font("Roboto", Font.PLAIN, 24));
 
         JLabel labelNombre = new JLabel("");
-        labelNombre.setBounds(35, 64, 294, 36);
+        labelNombre.setBounds(35, 64, 500, 36);
         panelNombre.add(labelNombre);
         labelNombre.setForeground(Color.WHITE);
         labelNombre.setFont(new Font("Roboto", Font.PLAIN, 33));

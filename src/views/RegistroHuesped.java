@@ -282,6 +282,8 @@ public class RegistroHuesped extends JFrame {
 				if (insert > 0) {
 					Exito exito = new Exito("Huesped registrado con éxito");
 					exito.setVisible(true);
+					MenuUsuario menuUsuario = new MenuUsuario();
+					menuUsuario.setVisible(true);
 					dispose();
 
 				} else {
@@ -327,6 +329,7 @@ public class RegistroHuesped extends JFrame {
 				int confirm = JOptionPane.showConfirmDialog(null, "¿Desea cerrar sesión en la aplicación?", "Confirmar cierre", JOptionPane.YES_NO_OPTION);
 
 				if (confirm == JOptionPane.YES_OPTION) {
+					InfoSession.setUsuarioLogueado(null);
 					Principal login = new Principal();
 					login.setVisible(true);
 					dispose();

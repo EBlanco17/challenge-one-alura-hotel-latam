@@ -10,9 +10,9 @@ public class ConexionFactory {
     private DataSource dataSource;
     public ConexionFactory() {
         var pooledDataSource = new ComboPooledDataSource();
-        pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/hotel_alura?userTimeZone=true&serverTimeZone=UTC");
-        pooledDataSource.setUser("root");
-        pooledDataSource.setPassword("admin");
+        pooledDataSource.setJdbcUrl("jdbc:mysql://sql10.freemysqlhosting.net/sql10642101?userTimeZone=true&serverTimeZone=UTC");
+        pooledDataSource.setUser("sql10642101");
+        pooledDataSource.setPassword("PK2lfxSxAc");
         pooledDataSource.setMaxPoolSize(10);
 
         this.dataSource = pooledDataSource;
