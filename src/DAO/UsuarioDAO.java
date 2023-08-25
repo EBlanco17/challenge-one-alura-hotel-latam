@@ -23,7 +23,7 @@ public class UsuarioDAO {
             try(statement){
                 statement.setString(1, usuario);
                 statement.setString(2, contrasena);
-                System.out.println(statement);
+
                 statement.execute();
                 final ResultSet resultSet = statement.getResultSet();
                 try (resultSet) {

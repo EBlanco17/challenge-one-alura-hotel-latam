@@ -275,6 +275,7 @@ public class RegistroReserva extends JFrame {
 		txtFechaEntrada.setCalendar(date);
 		panel.add(txtFechaEntrada);
 
+
 		txtFechaSalida = new JDateChooser();
 		txtFechaSalida.getCalendarButton().setIcon(new ImageIcon(RegistroReserva.class.getResource("/imagenes/icon-reservas.png")));
 		txtFechaSalida.getCalendarButton().setFont(new Font("Roboto", Font.PLAIN, 11));
@@ -290,6 +291,20 @@ public class RegistroReserva extends JFrame {
 		txtFechaSalida.setBorder(new LineBorder(new Color(255, 255, 255), 0));
 
 		panel.add(txtFechaSalida);
+		txtFechaEntrada.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent evt) {
+				Calendar newDate = txtFechaEntrada.getCalendar();
+				newDate.add(Calendar.DAY_OF_MONTH, 1); // Agregar 1 días a la fecha actual
+				txtFechaSalida.setCalendar(newDate);
+				txtValor.setText(String.valueOf(calcularValor(txtFechaEntrada, txtFechaSalida)));
+			}
+		});
+
+		txtFechaSalida.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+			public void propertyChange(java.beans.PropertyChangeEvent evt) {
+				txtValor.setText(String.valueOf(calcularValor(txtFechaEntrada, txtFechaSalida)));
+			}
+		});
 
 		txtValor = new JTextField();
 		txtValor.setBackground(SystemColor.text);
@@ -312,20 +327,6 @@ public class RegistroReserva extends JFrame {
 		txtFormaPago.setModel(new DefaultComboBoxModel(new String[] {"Tarjeta de Crédito", "Tarjeta de Débito", "Dinero en efectivo"}));
 
 		panel.add(txtFormaPago);
-
-		JPanel btncalcular = new JPanel();
-		btncalcular.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				txtValor.setText(String.valueOf(calcularValor(txtFechaEntrada, txtFechaSalida)));
-			}
-		});
-		btncalcular.add(lblCalcular);
-		btncalcular.setLayout(null);
-		btncalcular.setBackground(SystemColor.textHighlight);
-		btncalcular.setBounds(68, 493, 120, 35);
-		panel.add(btncalcular);
-		btncalcular.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
 		JPanel btnsiguiente = new JPanel();
 		btnsiguiente.addMouseListener(new MouseAdapter() {
@@ -384,10 +385,8 @@ public class RegistroReserva extends JFrame {
 	}
 
 	private Date formatearFecha(JDateChooser fecha){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate localDate = LocalDate.parse(sdf.format(fecha.getDate()), formatter);
-		return Date.valueOf(localDate);
+		Date fechaFormateada = new Date(fecha.getDate().getTime());
+		return Date.valueOf(fechaFormateada.toLocalDate());
 	}
 	private Double calcularValor(JDateChooser txtFechaEntrada, JDateChooser txtFechaSalida){
 		Date fechaEntrada = formatearFecha(txtFechaEntrada);

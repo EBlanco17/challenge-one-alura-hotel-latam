@@ -281,7 +281,11 @@ public class Busqueda extends JFrame {
 				} catch (NumberFormatException ex) {
 					lista = reservaController.buscar(txtBuscar.getText());
 				}
-
+				if (lista.isEmpty()) {
+					Error error = new Error("No se encontraron resultados");
+					error.setVisible(true);
+					return;
+				}
 				limpiarTabla(modelo);
 				limpiarTabla(modeloHuesped);
 				lista.forEach(reserva -> {

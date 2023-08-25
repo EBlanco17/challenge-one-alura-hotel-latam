@@ -117,7 +117,7 @@ public class HuespedDAO {
             final PreparedStatement statement = con.prepareStatement(
                     "UPDATE huespedes SET id_reserva = null WHERE id_reserva = ?");
             try (statement) {
-                System.out.println(statement);
+
                 statement.setInt(1, idReserva);
 
                 statement.executeUpdate();

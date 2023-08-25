@@ -82,7 +82,6 @@ Donde muestra las opciones de registro de reservas, huéspedes y busqueda de reg
 4. Vista Registro de Reservas
 <p align="center" >
 Se debe seleccionar la fecha de ingreso y salida, el tipo de medio de pago. </br>
-Al seleccionar el botón <strong>Calcular precio</strong> se calcula el valor. </br>
 Luego seleccionar el botón <strong>Siguiente</strong> para guardar la reserva.
     <br> <img width="700" heigth="700" src="https://i.postimg.cc/tgcBx500/reserva.png" alt="Vista Reservas">
 </p>

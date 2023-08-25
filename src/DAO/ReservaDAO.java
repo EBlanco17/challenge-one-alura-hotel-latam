@@ -104,7 +104,7 @@ public class ReservaDAO {
     }
 
     public List<Reserva> buscar(Integer id) {
-        System.out.println("Buscando reserva con id: "+id);
+
         List<Reserva> resultado = new ArrayList<>();
         try {
             final PreparedStatement statement = con.prepareStatement("SELECT R.*, H.*" +

@@ -282,9 +282,15 @@ public class RegistroHuesped extends JFrame {
 				if (insert > 0) {
 					Exito exito = new Exito("Huesped registrado con éxito");
 					exito.setVisible(true);
-					MenuUsuario menuUsuario = new MenuUsuario();
-					menuUsuario.setVisible(true);
-					dispose();
+					exito.addWindowListener(new java.awt.event.WindowAdapter() {
+						@Override
+						public void windowClosed(java.awt.event.WindowEvent e) {
+
+							dispose();
+							MenuUsuario menuUsuario = new MenuUsuario();
+							menuUsuario.setVisible(true);
+						}
+					});
 
 				} else {
 					Error error = new Error("Error al registrar huesped");
